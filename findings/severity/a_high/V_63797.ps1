@@ -1,7 +1,7 @@
 # ===========================================================================
 # Author: Corruptz
-# Creation Date : 11/8/2020
-# Last Updated  : 11/11/2020
+# Creation Date : 12/1/2020
+# Last Updated  : 12/2/2020
 # ===========================================================================
 # Title       : The system must be configured to prevent the storage of the LAN 
 #               Manager hash of passwords.
@@ -18,7 +18,6 @@
 # This setting controls whether or not a LAN Manager has of the password
 # is stored in the SAM the next time the password is changed. 
 # ===========================================================================
-# Details: 
 # Check Text ( C-64547r1_chk )
 # If the following registry value does not exist or is not configured as 
 # specified, this is a finding:
@@ -31,41 +30,45 @@
 # Value Type: REG_DWORD
 # Value: 1 
 # ===========================================================================
-# Fix Text: 
+# Fix Text:
 # (F-69725r1_fix)
 # Configure the policy value for Computer Configuration >> Windows Settings 
 # >> Security Settings >> Local Policies >> Security Options >> "Network 
 # security: Do not store LAN Manager hash value on next password change" to 
 # "Enabled". 
 # ===========================================================================
+# RETURN STATUS KEY
+# ===========================================================================
+# 0 = STIG found not vulnerable
+# 1 = STIG found misconfigured / vulnerable
+# 2 = STIG not found and vulnerable
+# ===========================================================================
 
 # Include Test-RegistryValue
-. '.\functions\Test-RegistryValue.ps1'
+. 'C:\Users\Win_10_STIG\Documents\STIG\STIG\functions\Test-RegistryValue.ps1'
 
-$V_63797 = Test-RegistryValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa' -Value NoLmHash
+$V_63797 = Test-RegistryValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa' -ValueName 'NoLMHash' -Value '1'
 
-if ($V_63797 -eq $true) {
-    $key_data = ""
-    $key_data = Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa' -Name NoLmHash -ErrorAction SilentlyContinue
-    $key_data = $key_data.NoLmHash
+$status = ''
 
-    if ($key_data -eq 1) {
-        # Mark as safe, add to report, move on
-        $status = 0
-        return $status
-    } else {
-        # Mark as unsafe, add to report, fix, and move on
-        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Lsa' -Name NoLmHash -Type DWORD -Value 1 -Force
+if($V_63797 -eq 0) {
+    # Write-Host "0 = STIG found not vulnerable"
+    $status = 0
+    return $status
 
-        $status = 1
-        return $status
-    }
+} elseif($V_63797 -eq 1) {
+    # Write-Host "1 = STIG found misconfigured / vulnerable"
+    # Reconfigure Registry Key and Value
+    Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Lsa' -Name 'NoLmHash' -Type 'DWORD' -Value '1' -Force
+
+    $status = 1
+    return $status
+    
 } else {
-    # Mark as missing, add to report, add to registry, and move on
-    New-ItemProperty 'HKLM:\System\CurrentControlSet\Control\Lsa' -Name NoLmHash -Type DWORD -Value 1 -Force >$null 2>&1
+    # Write-Host "2 = STIG not found and vulnerable"
+    # Add Registry Key and Value
+    New-ItemProperty 'HKLM:\System\CurrentControlSet\Control\Lsa' -Name 'NoLmHash' -Type 'DWORD' -Value '1' -Force | Out-Null
 
     $status = 2
     return $status
 }
-
-return $status

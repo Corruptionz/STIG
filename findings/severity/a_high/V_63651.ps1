@@ -1,7 +1,7 @@
 # ===========================================================================
 # Author: Corruptz
 # Creation Date : 11/8/2020
-# Last Updated  : 11/11/2020
+# Last Updated  : 12/2/2020
 # ===========================================================================
 # Title       : Solicited Remote Assistance must not be allowed.
 # Finding ID  : V-63651
@@ -17,7 +17,6 @@
 # by the local user. This may allow unauthorized parties access to the resources 
 # on the computer. 
 # ===========================================================================
-# Details: 
 # Check Text ( C-64401r1_chk )
 # If the following registry value does not exist or is not configured as 
 # specified, this is a finding:
@@ -36,34 +35,39 @@
 # Templates >> System >> Remote Assistance >> "Configure Solicited Remote 
 # Assistance" to "Disabled". 
 # ===========================================================================
+# RETURN STATUS KEY
+# ===========================================================================
+# 0 = STIG found not vulnerable
+# 1 = STIG found misconfigured / vulnerable
+# 2 = STIG not found and vulnerable
+# ===========================================================================
 
 # Include Test-RegistryValue
-. '.\functions\Test-RegistryValue.ps1'
+. 'C:\Users\Win_10_STIG\Documents\STIG\STIG\functions\Test-RegistryValue.ps1'
 
-$V_63651 = Test-RegistryValue -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Value fAllowToGetHelp
+$V_63651 = Test-RegistryValue -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -ValueName 'fAllowToGetHelp' -Value '0'
 
-if ($V_63651 -eq $true) {
-    $key_data = ""
-    $key_data = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name fAllowToGetHelp -ErrorAction SilentlyContinue
-    $key_data = $key_data.fAllowToGetHelp
-    
-    if ($key_data -eq 0) {
-        # Mark as safe, add to report, move on
-        $status = 0
-        return $status
-    } else {
-        # Mark as unsafe, add to report, fix, and move on
-        Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name fAllowToGetHelp -Type DWORD -Value 0 -Force
-    
-        $status = 1
-        return $status
-    }
+$status = ''
+
+if($V_63651 -eq 0) {
+    # Write-Host "0 = STIG found not vulnerable"
+
+    $status = 0
+    return $status
+
+} elseif($V_63651 -eq 1) {
+    # Write-Host "1 = STIG found misconfigured / vulnerable"
+    # Reconfigure Registry Key and Value
+
+    Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name 'fAllowToGetHelp' -Type 'DWORD' -Value '0' -Force
+
+    $status = 1
+    return $status
 } else {
-    # Mark as missing, add to report, add to registry, and move on
-    New-ItemProperty 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name fAllowToGetHelp -Type DWORD -Value 0 -Force >$null 2>&1
+    # Write-Host "2 = STIG not found and vulnerable"
+    # Add Registry Key and Value
+    New-ItemProperty 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name 'fAllowToGetHelp' -Type 'DWORD' -Value '0' -Force | Out-Null
 
     $status = 2
     return $status
 }
-
-return $status
