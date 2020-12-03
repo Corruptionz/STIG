@@ -9,7 +9,7 @@
 # Rule ID     : SV-78141r1_rule
 # IA Controls : NULL
 # Severity    : High
-# Finding URL : https://stigviewer.com/stig/windows_10/2020-03-24/finding/V-63651
+# Finding URL : https://www.stigviewer.com/stig/windows_10/2020-06-15/finding/V-63651
 # ===========================================================================
 # Description: 
 # Remote assistance allows another user to view or take control of the local 

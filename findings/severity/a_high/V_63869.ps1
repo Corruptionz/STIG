@@ -10,7 +10,7 @@
 # Rule ID     : SV-78359r1_rule
 # IA Controls : NULL 
 # Severity    : High
-# Finding URL : https://stigviewer.com/stig/windows_10/2020-03-24/finding/V-63869
+# Finding URL : https://www.stigviewer.com/stig/windows_10/2020-06-15/finding/V-63869
 # ===========================================================================
 # Description: 
 # Inappropriate granting of user rights can provide system, administrative, 

@@ -10,7 +10,7 @@
 # Rule ID     : SV-78287r1_rule
 # IA Controls : NULL
 # Severity    : High
-# Finding URL : https://stigviewer.com/stig/windows_10/2020-03-24/finding/V-63797
+# Finding URL : https://www.stigviewer.com/stig/windows_10/2020-06-15/finding/V-63797
 # ===========================================================================
 # Description: 
 # The LAN Manager has uses a weak encryption alorithm and there are 
