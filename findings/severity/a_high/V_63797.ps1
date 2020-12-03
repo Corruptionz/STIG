@@ -45,7 +45,7 @@
 # ===========================================================================
 
 # Include Test-RegistryValue
-. 'C:\Users\Win_10_STIG\Documents\STIG\STIG\functions\Test-RegistryValue.ps1'
+. '.\functions\Test-RegistryValue.ps1'
 
 $V_63797 = Test-RegistryValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa' -ValueName 'NoLMHash' -Value '1'
 

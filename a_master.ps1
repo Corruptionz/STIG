@@ -15,7 +15,7 @@
 # READ ME
 # ===========================================================================
 # Script must be run in PowerShell with Administrative privileges and must 
-# have 'Set-ExecutionPolicy RemoteSigned' enabled.
+# have 'Set-ExecutionPolicy RemoteSigned' enabled to run scripts.
 # ===========================================================================
 # RETURN STATUS KEY
 # ===========================================================================
@@ -25,7 +25,7 @@
 # ===========================================================================
 
 # POSSIBLE ADMIN COMMANDS
-# if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$name`"" -Verb RunAs; exit }
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$name`"" -Verb RunAs; exit }
 
 
 # Include Get-TimeStamp

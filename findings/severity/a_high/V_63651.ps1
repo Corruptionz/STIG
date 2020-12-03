@@ -43,7 +43,7 @@
 # ===========================================================================
 
 # Include Test-RegistryValue
-. 'C:\Users\Win_10_STIG\Documents\STIG\STIG\functions\Test-RegistryValue.ps1'
+. '.\functions\Test-RegistryValue.ps1'
 
 $V_63651 = Test-RegistryValue -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -ValueName 'fAllowToGetHelp' -Value '0'
 
