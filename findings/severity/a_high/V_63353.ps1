@@ -4,7 +4,7 @@
 # Last Updated  : 12/3/2020
 # ===========================================================================
 # Title       : Local volumes must be formatted using NTFS.
-# Finding ID  : V-63325
+# Finding ID  : V-63353
 # Version     : WN10-00-000050
 # Rule ID     : SV-77843r2_rule
 # IA Controls : NULL
