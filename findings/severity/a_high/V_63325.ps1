@@ -4,7 +4,7 @@
 # Last Updated  : 12/2/2020
 # ===========================================================================
 # Title       : The Windows Installer Always install with elevated privileges 
-#             : must be disabled.
+#               must be disabled.
 # Finding ID  : V-63325
 # Version     : WN10-CC-000315
 # Rule ID     : SV-77815r1_rule
