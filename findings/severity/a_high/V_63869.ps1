@@ -40,7 +40,7 @@
 # ===========================================================================
 
 # Get AppData path
-$path = $env:LOCALAPPDATA+"\Temp\LocalSecurityPolicy.cfg"
+$path = $env:WINDIR+'\System32\GroupPolicy\TempLocalSecurityPolicy.cfg'
 
 # Export local security policy
 secedit /export /cfg $path | Out-Null
