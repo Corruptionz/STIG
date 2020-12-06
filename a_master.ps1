@@ -1,7 +1,7 @@
 # ===========================================================================
 # Author: Corruptz
 # Creation Date : 11/8/2020
-# Last Updated  : 12/2/2020
+# Last Updated  : 12/6/2020
 # ===========================================================================
 # Description: 
 # The Windows 10 Security Technical Implementation Guide (STIG) 
@@ -120,4 +120,4 @@ foreach ($item in $high_severity_findings_missing) {
 Write-Host "====================================================================================="
 Write-Host "[$(Get-TimeStamp)] Report complete!"
 
-# Reboot? 
+gpupdate /force
