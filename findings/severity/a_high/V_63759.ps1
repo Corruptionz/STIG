@@ -45,27 +45,27 @@
 # Include Test-RegistryValue
 . '.\functions\Test-RegistryValue.ps1'
 
-$V_63759 = Test-RegistryValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters\' -ValueName 'RestrictNullSessAccess' -Value '1'
+$STIG = Test-RegistryValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters\' -ValueName 'RestrictNullSessAccess' -Value '1'
 
 $status = ''
 
-if($V_63759 -eq 0) {
+if($STIG -eq 0) {
     # Write-Host "0 = STIG found not vulnerable"
 
     $status = 0
     return $status
 
-} elseif($V_63759 -eq 1) {
+} elseif($STIG -eq 1) {
     # Write-Host "1 = STIG found misconfigured / vulnerable"
     # Reconfigure Registry Key and Value
-    Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters\' -Name 'RestrictNullSessAccess' -Type 'DWORD' -Value '1' -Force
+    Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters\' -Name 'RestrictNullSessAccess' -Type 'DWORD' -Value '1' -Force | Out-Null
 
     $status = 1
     return $status
 } else {
     # Write-Host "2 = STIG not found and vulnerable"
     # Add Registry Key and Value
-    New-Item -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\' -Name 'Explorer' -Force | Out-Null
+
     New-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters\' -Name 'RestrictNullSessAccess' -Type 'DWORD' -Value '1' -Force | Out-Null
 
     $status = 2
