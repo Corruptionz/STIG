@@ -4,7 +4,7 @@
 # Last Updated  : 12/29/2020
 # ====================================================================================================
 # Title       : Internet Information System (IIS) or its subcomponents must not be installed on a workstation.
-# Finding ID  : V-633777
+# Finding ID  : V-63377
 # Version     : WN10-00-000100
 # Rule ID     : SV-77867r1_rule
 # IA Controls : NULL
