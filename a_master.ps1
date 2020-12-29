@@ -120,4 +120,4 @@ foreach ($item in $high_severity_findings_missing) {
 Write-Host "====================================================================================="
 Write-Host "[$(Get-TimeStamp)] Report complete!"
 
-gpupdate /force
+# gpupdate /force
